@@ -2,7 +2,7 @@ module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "~> 3.0"
 
-  name = local.name
+  name = local.vpc_name
   cidr = "10.0.0.0/16"
 
   azs             = ["${local.region}a", "${local.region}b"]
@@ -22,13 +22,13 @@ module "vpc" {
   create_flow_log_cloudwatch_log_group = false
 
   public_subnet_tags = {
-    "kubernetes.io/cluster/${local.name}" = "shared"
-    "kubernetes.io/role/elb"              = 1
+    "kubernetes.io/cluster/${local.vpc_name}" = "shared"
+    "kubernetes.io/role/elb"                  = 1
   }
 
   private_subnet_tags = {
-    "kubernetes.io/cluster/${local.name}" = "shared"
-    "kubernetes.io/role/internal-elb"     = 1
+    "kubernetes.io/cluster/${local.vpc_name}" = "shared"
+    "kubernetes.io/role/internal-elb"         = 1
   }
 
   tags = local.tags
