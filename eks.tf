@@ -2,10 +2,10 @@ module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "19.16.0"
 
-  cluster_name                    = local.name
+  cluster_name                    = local.cluster_name
   cluster_version                 = local.cluster_version
   cluster_endpoint_private_access = true
-  cluster_endpoint_public_access  = false
+  cluster_endpoint_public_access  = true
 
   cluster_addons = {
     aws-ebs-csi-driver = {
@@ -17,15 +17,15 @@ module "eks" {
       most_recent = true
     }
 
-    timeouts = {
-      create = "25m"
-      delete = "10m"
-    }
+    # timeouts = {
+    #   create = "25m"
+    #   delete = "10m"
+    # }
 
     kube-proxy = {
       most_recent = true
     }
-    
+
     vpc-cni = {
       most_recent = true
     }
@@ -40,7 +40,7 @@ module "eks" {
   control_plane_subnet_ids = module.vpc.private_subnets
 
   manage_aws_auth_configmap = true
-  create_aws_auth_configmap = false
+  create_aws_auth_configmap = false #Set to 'true' when creating the cluster for a first time.
 
   # Extend cluster security group rules
   cluster_security_group_additional_rules = {
@@ -120,6 +120,14 @@ module "eks" {
       }
     }
   }
+
+  aws_auth_roles = [
+    {
+      rolearn  = "arn:aws:iam::${local.account_id}:role/SandboxAdmin"
+      username = "momchi"
+      groups   = ["system:masters"]
+    }
+  ]
 
   tags = local.tags
 }
