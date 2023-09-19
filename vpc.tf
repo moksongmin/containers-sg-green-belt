@@ -22,12 +22,12 @@ module "vpc" {
   create_flow_log_cloudwatch_log_group = false
 
   public_subnet_tags = {
-    "kubernetes.io/cluster/${local.vpc_name}" = "shared"
+    "kubernetes.io/cluster/${local.cluster_name}" = "shared"
     "kubernetes.io/role/elb"                  = 1
   }
 
   private_subnet_tags = {
-    "kubernetes.io/cluster/${local.vpc_name}" = "shared"
+    "kubernetes.io/cluster/${local.cluster_name}" = "shared"
     "kubernetes.io/role/internal-elb"         = 1
   }
 
