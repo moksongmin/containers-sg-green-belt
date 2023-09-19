@@ -5,9 +5,7 @@ locals {
   # partition  = data.aws_partition.current.partition
 
   tags = merge({
-    Example    = local.cluster_name
-    GithubRepo = "terraform-aws-eks"
-    GithubOrg  = "terraform-aws-modules"
+    ClusterName    = local.cluster_name
   }, var.tags)
 }
 
