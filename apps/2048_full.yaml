@@ -24,7 +24,7 @@ spec:
         imagePullPolicy: Always
         name: app-2048
         ports:
-        - containerPort: 48
+        - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
@@ -33,10 +33,10 @@ metadata:
   name: service-2048
 spec:
   ports:
-    - port: 48
-      targetPort: 48
+    - port: 80
+      targetPort: 80
       protocol: TCP
-  type: LoadBalancer
+  type: NodePort
   selector:
     app.kubernetes.io/name: app-2048
 ---
@@ -59,4 +59,4 @@ spec:
             service:
               name: service-2048
               port:
-                number: 48
+                number: 80
