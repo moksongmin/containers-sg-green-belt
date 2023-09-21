@@ -87,6 +87,7 @@ module "eks" {
 
       force_update_version = true
       instance_types       = ["t3.small"]
+      ami_type             = "BOTTLEROCKET_x86_64"
 
 
       description = "EKS managed node group launch template"
