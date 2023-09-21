@@ -55,15 +55,6 @@ data "aws_iam_policy_document" "ebs" {
   }
 }
 
-data "aws_ami" "eks_default" {
-  most_recent = true
-  owners      = ["amazon"]
-
-  filter {
-    name   = "name"
-    values = ["amazon-eks-node-${local.cluster_version}-v*"]
-  }
-}
 data "aws_eks_cluster_auth" "eks_cluster" {
   name = module.eks.cluster_name
 }
