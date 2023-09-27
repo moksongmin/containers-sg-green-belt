@@ -86,7 +86,7 @@ module "eks" {
       desired_size = 1
 
       force_update_version = true
-      instance_types       = ["t3.small"]
+      instance_types       = ["t3.medium"]
       ami_type             = "BOTTLEROCKET_x86_64"
 
 

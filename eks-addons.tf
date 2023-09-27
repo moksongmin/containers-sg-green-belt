@@ -34,5 +34,13 @@ module "eks-blueprints-addons" {
   # ArgoCD
   enable_argocd = true
 
+    argocd = {
+    name          = "argocd"
+    chart_version = "5.29.1"
+    repository    = "https://argoproj.github.io/argo-helm"
+    namespace     = "argocd"
+    values        = [templatefile("${path.module}/templates/argocd-helm-values.yaml", {})]
+  }
+
   depends_on = [module.eks]
 }
