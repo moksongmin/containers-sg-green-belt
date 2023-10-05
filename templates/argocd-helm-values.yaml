@@ -1801,14 +1801,11 @@ server:
   ## Server service configuration
   service:
     # -- Server service annotations
-    annotations: {
-     service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing,
-     service.beta.kubernetes.io/aws-load-balancer-type: alb
-    }
+    annotations: {}
     # -- Server service labels
     labels: {}
     # -- Server service type
-    type: LoadBalancer
+    type: NodePort
     # -- Server service http port for NodePort service type (only if `server.service.type` is set to "NodePort")
     nodePortHttp: 30080
     # -- Server service https port for NodePort service type (only if `server.service.type` is set to "NodePort")
