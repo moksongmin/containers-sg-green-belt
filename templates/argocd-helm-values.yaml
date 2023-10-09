@@ -239,7 +239,7 @@ configs:
 
     ## Server properties
     # -- Run server without TLS
-    server.insecure: false
+    server.insecure: true
     # -- Value for base href in index.html. Used if Argo CD is running behind reverse proxy under subpath different from /
     server.basehref: /
     # -- Used if Argo CD is running behind reverse proxy under subpath different from /
@@ -1805,7 +1805,7 @@ server:
     # -- Server service labels
     labels: {}
     # -- Server service type
-    type: LoadBalancer
+    type: ClusterIP
     # -- Server service http port for NodePort service type (only if `server.service.type` is set to "NodePort")
     nodePortHttp: 30080
     # -- Server service https port for NodePort service type (only if `server.service.type` is set to "NodePort")
@@ -1813,11 +1813,11 @@ server:
     # -- Server service http port
     servicePortHttp: 80
     # -- Server service https port
-    servicePortHttps: 443
+    #servicePortHttps: 443
     # -- Server service http port name, can be used to route traffic via istio
     servicePortHttpName: http
     # -- Server service https port name, can be used to route traffic via istio
-    servicePortHttpsName: https
+    #servicePortHttpsName: https
     # -- Server service https port appProtocol. (should be upper case - i.e. HTTPS)
     # servicePortHttpsAppProtocol: HTTPS
     # -- LoadBalancer will get created with the IP specified in this field
@@ -1886,13 +1886,18 @@ server:
 
   ingress:
     # -- Enable an ingress resource for the Argo CD server
-    enabled: false
+    enabled: true
     # -- Additional ingress annotations
-    annotations: {}
+    annotations: {
+      alb.ingress.kubernetes.io/scheme: internet-facing,
+      alb.ingress.kubernetes.io/target-type: ip,
+      alb.ingress.kubernetes.io/group.name: green-belt-eks-cluster
+    }
+
     # -- Additional ingress labels
     labels: {}
     # -- Defines which ingress controller will implement the resource
-    ingressClassName: ""
+    ingressClassName: "alb"
 
     # -- List of ingress hosts
     ## Argo Ingress.
@@ -1901,9 +1906,14 @@ server:
     hosts: []
       # - argocd.example.com
 
-    # -- List of ingress paths
-    paths:
-      - /
+    spec:
+      rules:
+        - http:
+            paths:
+              - path: /
+                backend:
+                  serviceName: "argocd-server"
+                  servicePort: 80
     # -- Ingress path type. One of `Exact`, `Prefix` or `ImplementationSpecific`
     pathType: Prefix
     # -- Additional ingress paths
@@ -1923,7 +1933,7 @@ server:
       #     - argocd.example.com
 
     # -- Uses `server.service.servicePortHttps` instead `server.service.servicePortHttp`
-    https: false
+    https: true
 
   # dedicated ingress for gRPC as documented at
   # Ref: https://argo-cd.readthedocs.io/en/stable/operator-manual/ingress/
