@@ -7,7 +7,7 @@ metadata:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: game-2048
+  namespace: argocd
   name: deployment-2048
 spec:
   selector:
@@ -29,7 +29,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: game-2048
+  namespace: argocd
   name: service-2048
 spec:
   ports:

@@ -1906,7 +1906,9 @@ server:
     ## Argo Ingress.
     ## Hostnames must be provided if Ingress is enabled.
     ## Secrets must be manually created in the namespace
-    hosts: []
+    hosts: [
+      "*.eu-west-2.elb.amazonaws.com"
+    ]
       # - argocd.example.com
 
     spec:
@@ -1915,19 +1917,22 @@ server:
             paths:
               - path: /
                 backend:
-                  serviceName: "argocd-server"
-                  servicePort: 443
+                  service:
+                    name:  argocd-server
+                    ports:
+                      number: 443
+
     # -- Ingress path type. One of `Exact`, `Prefix` or `ImplementationSpecific`
     pathType: Prefix
     # -- Additional ingress paths
-    extraPaths: []
-      # - path: /*
-      #   pathType: Prefix
-      #   backend:
-      #     service:
-      #       name: ssl-redirect
-      #       port:
-      #         name: use-annotation
+    extraPaths: 
+      - path: /game-2048
+        pathType: Prefix
+        backend:
+          service:
+            name: service-2048
+            port:
+              number: 80
 
     # -- Ingress TLS configuration
     tls: []
