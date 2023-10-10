@@ -29,7 +29,7 @@ metadata:
 spec:
   ports:
     - port: 443
-      targetPort: 443
+      targetPort: 8080
       protocol: TCP
   type: ClusterIP
   selector:
