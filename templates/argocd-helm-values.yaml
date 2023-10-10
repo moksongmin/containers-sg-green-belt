@@ -1813,11 +1813,11 @@ server:
     # -- Server service http port
     servicePortHttp: 80
     # -- Server service https port
-    #servicePortHttps: 443
+    servicePortHttps: 443
     # -- Server service http port name, can be used to route traffic via istio
     servicePortHttpName: http
     # -- Server service https port name, can be used to route traffic via istio
-    #servicePortHttpsName: https
+    servicePortHttpsName: https
     # -- Server service https port appProtocol. (should be upper case - i.e. HTTPS)
     # servicePortHttpsAppProtocol: HTTPS
     # -- LoadBalancer will get created with the IP specified in this field
@@ -1889,9 +1889,12 @@ server:
     enabled: true
     # -- Additional ingress annotations
     annotations: {
+      alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:eu-west-2:841811861814:certificate/68a36166-04f6-420c-8225-e4344c0bd2b4,
+      alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]',
+      alb.ingress.kubernetes.io/ssl-redirect: "443",
       alb.ingress.kubernetes.io/scheme: internet-facing,
       alb.ingress.kubernetes.io/target-type: ip,
-      alb.ingress.kubernetes.io/group.name: green-belt-eks-cluster
+      alb.ingress.kubernetes.io/group.name: gbcluster
     }
 
     # -- Additional ingress labels
@@ -1913,7 +1916,7 @@ server:
               - path: /
                 backend:
                   serviceName: "argocd-server"
-                  servicePort: 80
+                  servicePort: 443
     # -- Ingress path type. One of `Exact`, `Prefix` or `ImplementationSpecific`
     pathType: Prefix
     # -- Additional ingress paths
