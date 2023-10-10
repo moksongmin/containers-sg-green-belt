@@ -28,9 +28,14 @@ metadata:
   name: service-2048
 spec:
   ports:
-    - port: 443
-      targetPort: 8080
-      protocol: TCP
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 8080
+  - name: https
+    port: 443
+    protocol: TCP
+    targetPort: 8080
   type: ClusterIP
   selector:
     app.kubernetes.io/name: app-2048
