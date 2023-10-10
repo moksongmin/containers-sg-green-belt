@@ -10,7 +10,7 @@ locals {
 }
 
 locals {
-  cluster_name    = "green-belt-eks-cluster"
+  cluster_name    = "gbcluster"
   cluster_version = "1.27"
   # eks_oidc_issuer_url   = replace(data.aws_eks_cluster.eks_cluster.identity[0].oidc[0].issuer, "https://", "")
   # eks_oidc_provider_arn = "arn:${local.partition}:iam::${local.account_id}:oidc-provider/${local.eks_oidc_issuer_url}"
