@@ -31,11 +31,11 @@ spec:
   - name: http
     port: 80
     protocol: TCP
-    targetPort: 80
+    targetPort: 8081
   - name: https
     port: 443
     protocol: TCP
-    targetPort: 8080
+    targetPort: 8082
   type: ClusterIP
   selector:
     app.kubernetes.io/name: app-2048
