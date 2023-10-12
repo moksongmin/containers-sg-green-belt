@@ -26,6 +26,8 @@ kind: Service
 metadata:
   namespace: argocd
   name: service-2048
+  labels:
+    app.kubernetes.io/name: service-2048
 spec:
   ports:
   - name: http
