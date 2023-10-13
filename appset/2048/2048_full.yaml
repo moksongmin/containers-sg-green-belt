@@ -43,7 +43,7 @@ spec:
     port: 443
     protocol: TCP
     targetPort: 8080
-  type: ClusterIP
+  type: NodePort
   selector:
     app.kubernetes.io/name: app-2048
 ---
