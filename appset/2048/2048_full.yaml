@@ -59,7 +59,7 @@ metadata:
 spec:
   ingressClassName: alb
   rules:
-    - host: '*.argocd.example.com'
+    - host: 'game.example.com'
       http:
         paths:
         - path: /game
