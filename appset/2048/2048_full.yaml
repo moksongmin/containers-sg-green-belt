@@ -62,7 +62,7 @@ spec:
     - host: 'game.example.com'
       http:
         paths:
-        - path: /game
+        - path: /
           pathType: Prefix
           backend:
             service:
