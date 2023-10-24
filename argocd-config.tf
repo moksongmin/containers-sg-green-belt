@@ -12,3 +12,15 @@ resource "null_resource" "argocd_repository" {
     EOT
   }
 }
+
+########################## ArgoCD applications ##########################
+resource "local_file" "argocd_app_game" {
+  filename = "templates/argocd-apps.yaml"
+  content  = file("${path.module}/templates/argocd-apps.yaml")
+}
+
+resource "null_resource" "argocd_app_game" {
+  provisioner "local-exec" {
+    command = "kubectl apply -f ${local_file.argocd_app_game.filename}"
+  }
+}
