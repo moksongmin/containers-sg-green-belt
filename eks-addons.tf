@@ -34,7 +34,7 @@ module "eks-blueprints-addons" {
   # ArgoCD
   enable_argocd = true
 
-    argocd = {
+  argocd = {
     name          = "argocd"
     chart_version = "5.29.1"
     repository    = "https://argoproj.github.io/argo-helm"
