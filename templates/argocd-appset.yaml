@@ -4,8 +4,6 @@ metadata:
   name: cluster-appset
   namespace: argocd
 spec:
-  goTemplate: true
-  goTemplateOptions: ["missingkey=error"]
   generators:
   - git:
       repoURL: https://github.com/moksongmin/containers-sg-green-belt.git
