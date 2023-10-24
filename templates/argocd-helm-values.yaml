@@ -1891,10 +1891,13 @@ server:
     annotations: {
       alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:eu-west-2:841811861814:certificate/68a36166-04f6-420c-8225-e4344c0bd2b4,
       alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]',
-      alb.ingress.kubernetes.io/ssl-redirect: "443",
+    # alb.ingress.kubernetes.io/ssl-redirect: "443",
       alb.ingress.kubernetes.io/scheme: internet-facing,
       alb.ingress.kubernetes.io/target-type: ip,
-      alb.ingress.kubernetes.io/group.name: gbcluster
+      alb.ingress.kubernetes.io/group.name: gbcluster,
+      alb.ingress.kubernetes.io/healthcheck-path: /
+    # alb.ingress.kubernetes.io/healthcheck-port: 443,
+    # alb.ingress.kubernetes.io/healthcheck-protocol: HTTPS
     }
 
     # -- Additional ingress labels
@@ -1907,32 +1910,40 @@ server:
     ## Hostnames must be provided if Ingress is enabled.
     ## Secrets must be manually created in the namespace
     hosts: [
-      "*.eu-west-2.elb.amazonaws.com"
+    # "*.eu-west-2.elb.amazonaws.com"
+    # "k8s-gbcluster-3f774e5535-1885225189.eu-west-2.elb.amazonaws.com"
+      argocd.example.com
     ]
-      # - argocd.example.com
 
-    spec:
-      rules:
-        - http:
-            paths:
-              - path: /
-                backend:
-                  service:
-                    name:  argocd-server
-                    ports:
-                      number: 443
+    # spec:
+    #   rules:
+    #     - http:
+    #         paths:
+    #           - path: /app1/
+    #             backend:
+    #               service:
+    #                 name:  argocd-server
+    #                 ports:
+    #                   number: 443       
 
     # -- Ingress path type. One of `Exact`, `Prefix` or `ImplementationSpecific`
-    pathType: Prefix
+    #pathType: Prefix
     # -- Additional ingress paths
     extraPaths: 
-      - path: /game-2048
+      - path: /argocd/
         pathType: Prefix
         backend:
           service:
-            name: service-2048
+            name: argocd-server
             port:
-              number: 80
+              number: 443
+      # - path: /2048/
+      #   pathType: Prefix
+      #   backend:
+      #     service:
+      #       name: service-2048
+      #       port:
+      #         number: 80          
 
     # -- Ingress TLS configuration
     tls: []
