@@ -22,7 +22,7 @@ spec:
       destination:
         name: ''
         server: https://kubernetes.default.svc
-        namespace: argocd
+        namespace: grafana
       syncPolicy:
         syncOptions:
-        - CreateNamespace=false
+        - CreateNamespace=true
