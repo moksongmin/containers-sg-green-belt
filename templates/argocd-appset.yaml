@@ -2,6 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: appset
+  namespace: argocd
 spec:
   destination:
     name: ''
@@ -9,7 +10,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   source:
     path: appset/
-    repoURL: 'https://github.com/moksongmin/containers-sg-green-belt.git'
+    repoURL: 'https://github.com/moksongmin/containers-sg-green-belt'
     targetRevision: HEAD
     directory:
       recurse: true
@@ -33,7 +34,3 @@ spec:
       destination:
         server: 'https://kubernetes.default.svc'
         namespace: argocd
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: false
