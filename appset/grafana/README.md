@@ -1,3 +1,3 @@
-# Grafana Helm Manifest
+# Grafana Manifest
 
 * Installs the web dashboarding system [Grafana](http://grafana.org/)
