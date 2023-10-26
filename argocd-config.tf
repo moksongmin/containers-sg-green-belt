@@ -11,6 +11,8 @@ resource "null_resource" "argocd_repository" {
       kubectl apply -f ${local_file.argocd_repository.filename}
     EOT
   }
+  
+  depends_on = [module.eks]
 }
 
 ########################## ArgoCD applications ##########################
@@ -21,6 +23,11 @@ resource "local_file" "argocd_app_game" {
 
 resource "null_resource" "argocd_app_game" {
   provisioner "local-exec" {
-    command = "kubectl apply -f ${local_file.argocd_app_game.filename}"
+    command = <<EOT
+      aws eks update-kubeconfig --region ${local.region} --name ${local.cluster_name} ;
+      kubectl apply -f ${local_file.argocd_app_game.filename}
+      EOT
   }
+
+  depends_on = [module.eks]
 }

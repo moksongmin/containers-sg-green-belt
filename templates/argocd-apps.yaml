@@ -9,7 +9,7 @@ spec:
     namespace: argocd
     server: 'https://kubernetes.default.svc'
   source:
-    path: appset/
+    path: appset/game-2048/
     repoURL: 'https://github.com/moksongmin/containers-sg-green-belt.git'
     targetRevision: HEAD
     directory:
