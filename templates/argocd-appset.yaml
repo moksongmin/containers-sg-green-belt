@@ -1,8 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: cluster-appset
-  namespace: argocd
+  name: appset
 spec:
   destination:
     name: ''
@@ -10,7 +9,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   source:
     path: appset/
-    repoURL: 'https://github.com/moksongmin/containers-sg-green-belt'
+    repoURL: 'https://github.com/moksongmin/containers-sg-green-belt.git'
     targetRevision: HEAD
     directory:
       recurse: true
@@ -21,7 +20,7 @@ spec:
         repoURL: 'https://github.com/moksongmin/containers-sg-green-belt.git'
         revision: HEAD
         directories:
-          - path: appset/*
+          - path: appset/
   template:
     metadata:
       name: '{{.path.basename}}'
@@ -30,14 +29,10 @@ spec:
       source:
         repoURL: 'https://github.com/moksongmin/containers-sg-green-belt.git'
         targetRevision: HEAD
-        path: '{{.path.path}}'
+        path: '{{path}}'
       destination:
-        name: ''
         server: 'https://kubernetes.default.svc'
-        namespace: grafana
-      syncPolicy:
-        syncOptions:
-          - CreateNamespace=true
+        namespace: argocd
   syncPolicy:
     automated:
       prune: true
