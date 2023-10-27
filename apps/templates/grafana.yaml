@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: grafana
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: grafana
+  project: default
+  source:
+    chart: grafana
+    helm:
+      values: |
+        ingress:
+          enabled: true
+          path: /
+          hosts:
+            - grafana.example.com
+          annotations:
+            kubernetes.io/ingress.class: alb
+            alb.ingress.kubernetes.io/scheme: internet-facing
+            alb.ingress.kubernetes.io/target-type: ip
+            alb.ingress.kubernetes.io/group.name: gbcluster
+    repoURL: https://grafana.github.io/helm-charts
+    targetRevision: 10.1.5
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
