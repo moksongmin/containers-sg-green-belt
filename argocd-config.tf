@@ -12,25 +12,25 @@ resource "null_resource" "argocd_repository" {
     EOT
   }
   
-  depends_on = [module.eks]
+  depends_on = [module.eks, module.eks-blueprints-addons]
 }
 
 ########################### ArgoCD Application Set ##########################
-resource "local_file" "argocd_appset" {
-  filename = "templates/argocd-appset.yaml"
-  content  = file("${path.module}/templates/argocd-appset.yaml")
-}
+# resource "local_file" "argocd_appset" {
+#   filename = "templates/argocd-appset.yaml"
+#   content  = file("${path.module}/templates/argocd-appset.yaml")
+# }
 
-resource "null_resource" "argocd_appset" {
-  provisioner "local-exec" {
-    command = <<EOT
-      aws eks update-kubeconfig --region ${local.region} --name ${local.cluster_name} ;
-      kubectl apply -f ${local_file.argocd_appset.filename}
-      EOT
-  }
+# resource "null_resource" "argocd_appset" {
+#   provisioner "local-exec" {
+#     command = <<EOT
+#       aws eks update-kubeconfig --region ${local.region} --name ${local.cluster_name} ;
+#       kubectl apply -f ${local_file.argocd_appset.filename}
+#       EOT
+#   }
 
-  depends_on = [module.eks]
-}
+#   depends_on = [module.eks, module.eks-blueprints-addons]
+# }
 
 ########################### ArgoCD application ##############################
 
