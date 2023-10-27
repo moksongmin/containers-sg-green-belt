@@ -22,7 +22,6 @@ spec:
       values: |
         pushgateway:
           enabled: false
-        
         prometheus-node-exporter:
           enabled: false
     repoURL: https://prometheus-community.github.io/helm-charts
