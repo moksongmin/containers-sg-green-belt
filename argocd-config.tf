@@ -1,4 +1,4 @@
-########################## ArgoCD repository ##############################
+########################## ArgoCD Repository ##############################
 resource "local_file" "argocd_repository" {
   filename = "templates/argocd-repo.yaml"
   content  = file("${path.module}/templates/argocd-repo.yaml")
@@ -9,6 +9,18 @@ resource "null_resource" "argocd_repository" {
     command = <<EOT
       aws eks update-kubeconfig --region ${local.region} --name ${local.cluster_name} ;
       kubectl apply -f ${local_file.argocd_repository.filename}
+    EOT
+  }
+  
+  depends_on = [module.eks, module.eks-blueprints-addons]
+}
+
+########################## ArgoCD App of Apps ##############################
+resource "null_resource" "app_of_apps" {
+  provisioner "local-exec" {
+    command = <<EOT
+      aws eks update-kubeconfig --region ${local.region} --name ${local.cluster_name} ;
+      helm template apps/ | kubectl apply -f -
     EOT
   }
   
