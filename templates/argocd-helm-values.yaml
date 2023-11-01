@@ -1889,7 +1889,7 @@ server:
     enabled: true
     # -- Additional ingress annotations
     annotations: {
-      alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:eu-west-2:841811861814:certificate/68a36166-04f6-420c-8225-e4344c0bd2b4,
+      alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:eu-west-2:841811861814:certificate/85c201cf-1132-4fca-b732-e03489e0589d,
       alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]',
     # alb.ingress.kubernetes.io/ssl-redirect: "443",
       alb.ingress.kubernetes.io/scheme: internet-facing,
