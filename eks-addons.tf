@@ -36,7 +36,7 @@ module "eks-blueprints-addons" {
 
   argocd = {
     name          = "argocd"
-    chart_version = "5.29.1"
+    chart_version = "5.53.0"
     repository    = "https://argoproj.github.io/argo-helm"
     namespace     = "argocd"
     values        = [templatefile("${path.module}/templates/argocd-helm-values.yaml", {})]
